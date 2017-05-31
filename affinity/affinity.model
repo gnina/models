@@ -15,7 +15,7 @@ layer {
     shuffle: false
     balanced: false
     has_affinity: true
-    root_folder: ".."
+    root_folder: "."
   }
 }
 layer {

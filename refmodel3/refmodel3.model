@@ -13,7 +13,7 @@ layer {
     resolution: 0.5    
     shuffle: false
     balanced: false
-    root_folder: "/home/dkoes/CSAR/"
+    root_folder: "DATA_ROOT"
   }
 }
 layer {
@@ -33,7 +33,7 @@ layer {
     balanced: true
     random_rotation: true
     random_translate: 2
-    root_folder: "/home/dkoes/CSAR/"
+    root_folder: "DATA_ROOT"
   }
 }
 

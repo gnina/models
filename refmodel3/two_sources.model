@@ -28,7 +28,7 @@ layer {
   molgrid_data_param {
     source: "TRAINFILE"
     source2: "TRAINFILE2"
-	source_ratio: 1.0
+    source_ratio: 1.0
     batch_size: 50
     dimension: 23.5
     resolution: 0.5

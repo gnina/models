@@ -14,6 +14,7 @@ layer {
     shuffle: false
     balanced: false
     root_folder: "DATA_ROOT"
+    ligmap: "ligmap.old"
   }
 }
 layer {
@@ -34,6 +35,7 @@ layer {
     random_rotation: true
     random_translate: 2
     root_folder: "DATA_ROOT"
+    ligmap: "ligmap.old"
   }
 }
 layer {

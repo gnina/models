@@ -1,0 +1,469 @@
+#version: "v0.1"
+name: "residual-net"
+
+layer {
+	name: "data"
+	type: "MolGridData"
+	top: "data"
+	top: "label"
+	top: "affinity"
+	include {
+		phase: TEST
+	}
+	molgrid_data_param {
+		source: "TESTFILE"
+		batch_size: 1
+		dimension: 23.5
+		resolution: 0.5
+		shuffle: false
+		balanced: false
+		has_affinity: true
+		root_folder: "/home/dkoes/PDBbind/refined-set"
+	}
+}
+
+layer {
+	name: "data"
+	type: "MolGridData"
+	top: "data"
+	top: "label"
+	top: "affinity"
+	include {
+		phase: TRAIN
+	}
+	molgrid_data_param {
+		source: "TRAINFILE"
+		batch_size:  20
+		dimension: 23.5
+		resolution: 0.5
+		shuffle: true
+		balanced: true
+		stratify_receptor: true
+		stratify_affinity_min: 0
+		stratify_affinity_max: 0
+		stratify_affinity_step: 0
+		has_affinity: true
+		random_rotation: true
+		random_translate: 2
+		root_folder: "/home/dkoes/PDBbind/refined-set"
+	}
+}
+
+layer {
+	name: "unit1_pool"
+	type: "Pooling"
+	bottom: "data"
+	top: "unit1_pool"
+	pooling_param {
+		pool: MAX
+		kernel_size: 2
+		stride: 2
+	}
+}
+
+## Beginning of Residual Net-------------------------
+
+
+# Branch 1-------------------------
+
+layer {
+    name: "branch1a_conv"
+    type: "Convolution"
+    bottom: "unit1_pool"
+    top: "branch1a_conv"
+    convolution_param {
+        num_output: 32
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch1a_relu"
+    type: "ReLU"
+    bottom: "branch1a_conv"
+    top: "branch1a_conv"
+}
+
+layer {
+    name: "branch1b_conv"
+    type: "Convolution"
+    bottom: "branch1a_conv"
+    top: "branch1b_conv"
+    convolution_param {
+        num_output: 32
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch1b_relu"
+    type: "ReLU"
+    bottom: "branch1b_conv"
+    top: "branch1b_conv"
+}
+
+layer {
+    name: "branch1c_conv"
+    type: "Convolution"
+    bottom: "branch1b_conv"
+    top: "branch1c_conv"
+    convolution_param {
+        num_output: 32
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch1c_relu"
+    type: "ReLU"
+    bottom: "branch1c_conv"
+    top: "branch1c_conv"
+}
+
+# Shortcut Connection 1 -----
+
+layer {
+    name: "branch1_conv"
+    type: "Convolution"
+    bottom: "unit1_pool"
+    top: "branch1_conv"
+    convolution_param {
+        num_output: 32
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "res1"
+    bottom: "branch1_conv"
+    bottom: "branch1c_conv"
+    top: "res1"
+    type: "Eltwise"
+}
+
+layer {
+    name: "res1_relu"
+    bottom: "res1"
+    top: "res1"
+    type: "ReLU"
+}
+
+# Branch 2-------------------------
+
+layer {
+    name: "branch2a_conv"
+    type: "Convolution"
+    bottom: "res1"
+    top: "branch2a_conv"
+    convolution_param {
+        num_output: 64
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch2a_relu"
+    type: "ReLU"
+    bottom: "branch2a_conv"
+    top: "branch2a_conv"
+}
+
+layer {
+    name: "branch2b_conv"
+    type: "Convolution"
+    bottom: "branch2a_conv"
+    top: "branch2b_conv"
+    convolution_param {
+        num_output: 64
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch2b_relu"
+    type: "ReLU"
+    bottom: "branch2b_conv"
+    top: "branch2b_conv"
+}
+
+layer {
+    name: "branch2c_conv"
+    type: "Convolution"
+    bottom: "branch2b_conv"
+    top: "branch2c_conv"
+    convolution_param {
+        num_output: 64
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch2c_relu"
+    type: "ReLU"
+    bottom: "branch2c_conv"
+    top: "branch2c_conv"
+}
+
+# Shortcut Connection 2 -----
+
+layer {
+    name: "branch2_conv"
+    type: "Convolution"
+    bottom: "res1"
+    top: "branch2_conv"
+    convolution_param {
+        num_output: 64
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "res2"
+    bottom: "branch2_conv"
+    bottom: "branch2c_conv"
+    top: "res2"
+    type: "Eltwise"
+}
+
+layer {
+    name: "res2_relu"
+    bottom: "res2"
+    top: "res2"
+    type: "ReLU"
+}
+
+
+# Branch 3-------------------------
+
+layer {
+    name: "branch3a_conv"
+    type: "Convolution"
+    bottom: "res2"
+    top: "branch3a_conv"
+    convolution_param {
+        num_output: 128
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch3a_relu"
+    type: "ReLU"
+    bottom: "branch3a_conv"
+    top: "branch3a_conv"
+}
+
+layer {
+    name: "branch3b_conv"
+    type: "Convolution"
+    bottom: "branch3a_conv"
+    top: "branch3b_conv"
+    convolution_param {
+        num_output: 128
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch3b_relu"
+    type: "ReLU"
+    bottom: "branch3b_conv"
+    top: "branch3b_conv"
+}
+
+layer {
+    name: "branch3c_conv"
+    type: "Convolution"
+    bottom: "branch3b_conv"
+    top: "branch3c_conv"
+    convolution_param {
+        num_output: 128
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "branch3c_relu"
+    type: "ReLU"
+    bottom: "branch3c_conv"
+    top: "branch3c_conv"
+}
+
+# Shortcut Connection 3 -----
+
+layer {
+    name: "branch3_conv"
+    type: "Convolution"
+    bottom: "res2"
+    top: "branch3_conv"
+    convolution_param {
+        num_output: 128
+        pad: 1
+        kernel_size: 3
+        stride: 1
+        weight_filler {
+            type: "xavier"
+        }
+    }
+}
+
+layer {
+    name: "res3"
+    bottom: "branch3_conv"
+    bottom: "branch3c_conv"
+    top: "res3"
+    type: "Eltwise"
+}
+
+layer {
+    name: "res3_relu"
+    bottom: "res3"
+    top: "res3"
+    type: "ReLU"
+}
+
+# End of Residual Net------------------------------
+
+layer {
+	name: "split"
+	type: "Split"
+	bottom: "res3"
+	top: "split"
+}
+
+layer {
+	name: "output_fc"
+	type: "InnerProduct"
+	bottom: "split"
+	top: "output_fc"
+	inner_product_param {
+		num_output: 2
+		weight_filler {
+			type: "xavier"
+		}
+	}
+}
+
+layer {
+	name: "loss"
+	type: "SoftmaxWithLoss"
+	bottom: "output_fc"
+	bottom: "label"
+	top: "loss"
+}
+
+layer {
+	name: "output"
+	type: "Softmax"
+	bottom: "output_fc"
+	top: "output"
+}
+
+layer {
+	name: "labelout"
+	type: "Split"
+	bottom: "label"
+	top: "labelout"
+	include {
+		phase: TEST
+	}
+}
+
+
+layer {
+	name: "output_fc_aff"
+	type: "InnerProduct"
+	bottom: "split"
+	top: "output_fc_aff"
+	inner_product_param {
+		num_output: 1
+		weight_filler {
+			type: "xavier"
+		}
+	}
+}
+
+layer {
+	name: "rmsd"
+	type: "AffinityLoss"
+	bottom: "output_fc_aff"
+	bottom: "affinity"
+	top: "rmsd"
+	affinity_loss_param {
+		gap: 0
+		pseudohuber: true
+		delta: 4
+	}
+}
+
+layer {
+	name: "predaff"
+	type: "Flatten"
+	bottom: "output_fc_aff"
+	top: "predaff"
+}
+
+layer {
+	name: "affout"
+	type: "Split"
+	bottom: "affinity"
+	top: "affout"
+	include {
+		phase: TEST
+	}
+}

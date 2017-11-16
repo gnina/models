@@ -3,6 +3,7 @@ layer {
   type: "MolGridData"
   top: "data"
   top: "label"
+  top: "affinity"
   top: "rmsd_true"
   include {
     phase: TEST
@@ -14,6 +15,7 @@ layer {
     resolution: 0.5
     shuffle: false
     balanced: false
+    has_affinity: true
     has_rmsd: true
     root_folder: "DATA_ROOT"
   }
@@ -23,6 +25,7 @@ layer {
   type: "MolGridData"
   top: "data"
   top: "label"
+  top: "affinity"
   top: "rmsd_true"
   include {
     phase: TRAIN
@@ -34,6 +37,7 @@ layer {
     resolution: 0.5
     shuffle: true
     balanced: true
+    has_affinity: true
     has_rmsd: true
     random_rotation: true
     random_translate: 2
@@ -137,16 +141,22 @@ layer {
   top: "unit3_conv1"
 }
 layer {
-  name: "rmsd_pred"
+  name: "rmsd_fc1"
   type: "InnerProduct"
   bottom: "unit3_conv1"
-  top: "rmsd_pred"
+  top: "rmsd_fc1"
   inner_product_param {
     num_output: 1
     weight_filler {
       type: "xavier"
     }
   }
+}
+layer {
+  name: "rmsd_pred"
+  type: "ELU"
+  bottom: "rmsd_fc1"
+  top: "rmsd_pred"
 }
 layer {
   name: "rmsd_loss"

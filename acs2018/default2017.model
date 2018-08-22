@@ -1,0 +1,252 @@
+# --base_lr 0.010000 --momentum 0.900000 --weight_decay 0.001000 -- solver SGD
+
+layer {
+  name: "data"
+  type: "MolGridData"
+  top: "data"
+  top: "label"
+  top: "affinity"
+  include {
+    phase: TEST
+  }
+  molgrid_data_param {
+        source: "TESTFILE"
+        batch_size: 50
+        dimension: 23.5
+        resolution: 0.500000
+        shuffle: false
+        ligmap: "completelig"
+        recmap: "completerec"
+        balanced: false
+        has_affinity: true
+        root_folder: "DATA_ROOT"
+        ligmolcache: "refined_lig.molcache"
+        recmolcache: "refined_rec.molcache"        
+    }
+  }
+  
+layer {
+  name: "data"
+  type: "MolGridData"
+  top: "data"
+  top: "label"
+  top: "affinity"
+  include {
+    phase: TRAIN
+  }
+  molgrid_data_param {
+        source: "TRAINFILE"
+        batch_size:  50
+        dimension: 23.5
+        resolution: 0.500000
+        shuffle: true
+        balanced: true
+        jitter: 0.000000
+        ligmap: "completelig"
+        recmap: "completerec"        
+        stratify_receptor: true
+        stratify_affinity_min: 0
+        stratify_affinity_max: 0
+        stratify_affinity_step: 1.000000
+        has_affinity: true
+        random_rotation: true
+        random_translate: 6
+        root_folder: "DATA_ROOT"
+        ligmolcache: "refined_lig.molcache"
+        recmolcache: "refined_rec.molcache"        
+    }
+}
+
+layer {
+  name: "unit1_pool"
+  type: "Pooling"
+  bottom: "data"
+  top: "unit1_pool"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "unit1_conv"
+  type: "Convolution"
+  bottom: "unit1_pool"
+  top: "unit1_conv"
+  convolution_param {
+    num_output: 32
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      symmetric_fraction: 1.0      
+    }
+  }
+}
+layer {
+  name: "unit1_func"
+  type: "ReLU"
+  bottom: "unit1_conv"
+  top: "unit1_conv"
+  
+}
+
+layer {
+  name: "unit2_pool"
+  type: "Pooling"
+  bottom: "unit1_conv"
+  top: "unit2_pool"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "unit2_conv"
+  type: "Convolution"
+  bottom: "unit2_pool"
+  top: "unit2_conv"
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      symmetric_fraction: 1.0      
+    }
+  }
+}
+layer {
+  name: "unit2_func"
+  type: "ReLU"
+  bottom: "unit2_conv"
+  top: "unit2_conv"
+  
+}
+
+layer {
+  name: "unit3_pool"
+  type: "Pooling"
+  bottom: "unit2_conv"
+  top: "unit3_pool"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+layer {
+  name: "unit3_conv"
+  type: "Convolution"
+  bottom: "unit3_pool"
+  top: "unit3_conv"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    stride: 1
+    weight_filler {
+      type: "xavier"
+      symmetric_fraction: 1.0      
+    }
+  }
+}
+layer {
+  name: "unit3_func"
+  type: "ReLU"
+  bottom: "unit3_conv"
+  top: "unit3_conv"
+  
+}
+
+layer {
+    name: "split"
+    type: "Split"
+    bottom: "unit3_conv"
+    top: "split"
+}
+
+layer {
+  name: "pose_output"
+  type: "InnerProduct"
+  bottom: "split"
+  top: "pose_output"
+  inner_product_param {
+    num_output: 2
+    weight_filler {
+      type: "xavier"
+    }
+  }
+}
+
+layer {
+  name: "affinity_output"
+  type: "InnerProduct"
+  bottom: "split"
+  top: "affinity_output"
+  inner_product_param {
+    num_output: 1
+    weight_filler {
+      type: "xavier"
+    }
+  }
+}
+layer {
+  name: "loss"
+  type: "SoftmaxWithLoss"
+  bottom: "pose_output"
+  bottom: "label"
+  top: "loss"
+}
+
+layer {
+  name: "output"
+  type: "Softmax"
+  bottom: "pose_output"
+  top: "output"
+}
+layer {
+  name: "labelout"
+  type: "Split"
+  bottom: "label"
+  top: "labelout"
+  include {
+    phase: TEST
+  }
+}
+layer {
+  name: "rmsd"
+  type: "AffinityLoss"
+  bottom: "affinity_output"
+  bottom: "affinity"
+  top: "rmsd"
+  affinity_loss_param {
+    scale: 0.1
+    gap: 0.0
+    pseudohuber: true
+    delta: 4.0
+    penalty: 0.0
+    ranklossmult: 0.0
+    ranklossneg: 0    
+  }
+}
+
+layer {
+  name: "predaff"
+  type: "Flatten"
+  bottom: "affinity_output"
+  top: "predaff"
+}
+
+layer {
+  name: "affout"
+  type: "Split"
+  bottom: "affinity"
+  top: "affout"
+  include {
+    phase: TEST
+  }
+}

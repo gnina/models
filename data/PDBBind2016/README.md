@@ -4,6 +4,10 @@
  * caches.tar.gz - Compressed files containing the Libmolgrid compatible caches for faster data loading.
  * \*.types - Files containing a given train/test split of the data.
 
+## Downloading the missing tarball
+http://bits.csb.pitt.edu/files/crossdock2020/
+You need to download PDDBbind2016.tar.gz
+
 ## Extracting the tarballs
 ```
 tar -xzvf PDBBind2016.tar.gz

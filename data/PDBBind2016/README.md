@@ -6,7 +6,8 @@
 
 ## Downloading the missing tarball
 http://bits.csb.pitt.edu/files/crossdock2020/
-You need to download PDDBbind2016.tar.gz
+
+You need to download PDDBbind2016.tar.gz and PDBBind2016_caches.tar.gz
 
 ## Extracting the tarballs
 ```

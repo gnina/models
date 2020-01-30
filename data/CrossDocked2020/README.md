@@ -2,6 +2,7 @@
 
  * CrossDocked2020_types.tar.gz - Compressed directory containing all of the types files used to train models
  * TODO: add other tarballs once generated
+ * The datafiles are currently being built and should be available by Feb 3rd -- Thank you for your patience!
 
 ## Downloading the tarballs
 http://bits.csb.pitt.edu/files/crossdock2020/

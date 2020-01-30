@@ -12,7 +12,7 @@ You need to download PDDBbind2016.tar.gz and PDBBind2016_caches.tar.gz
 ## Extracting the tarballs
 ```
 tar -xzvf PDBBind2016.tar.gz
-tar -xzvf caches.tar.gz
+tar -xzvf PDBBind2016_caches.tar.gz
 ```
 
 ## Data structure

@@ -1,4 +1,4 @@
-This directory includes the models and atom maps used in our paper.
+This directory includes the models and atom maps used in our paper [preprint](https://doi.org/10.26434/chemrxiv.11833323.v1)
 
 * default2017.model - the old default model for gnina
 * default2017_norec.model - the old default model for gnina, for training ligand-only models

@@ -1,4 +1,4 @@
-This directory includes the models and atom maps used in our paper [preprint](https://doi.org/10.26434/chemrxiv.11833323.v1)
+This directory includes the models and atom maps used in our paper [Three-Dimensional Convolutional Neural Networks and a Cross-Docked Data Set for Structure-Based Drug Design](https://pubs.acs.org/doi/10.1021/acs.jcim.0c00411)
 
 * default2017.model - the old default model for gnina
 * default2017_norec.model - the old default model for gnina, for training ligand-only models

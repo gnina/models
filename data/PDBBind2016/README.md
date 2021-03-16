@@ -39,8 +39,14 @@ The tarball is organized by PDBid. Each receptor is a directory which contains t
 There are 3 sets of data present here: the PDBBind General, Refined, and Core sets.
 Additionally, there are multiple different kinds of splits of the data present here.
 The types files will segregate the data accordingly.
+The 3 fold clustered-cross validation splits have 5 different seeds.
 
 Each of the types files can be found in their own folder: Refined_types, General_types
+
+### Data in types file
+```
+<label> <pK> <RMSD to crystal> <Receptor filename> <Ligand filename> # <Autodock Vina score>>
+```
 
 ### Refined_types
 ```

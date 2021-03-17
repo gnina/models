@@ -29,7 +29,7 @@ The raw data files are organized by Pockets. Each pocket is a directory which co
 ```
 We provide all of the data that was generated. Note: this is a superset to what was used in the paper. We provided all generated poses in order to help support the community in resampling this dataset. The types files specify the specific poses that we used in the paper (selected such that each pocket:ligand pose is distinct from the rest of them). 
 
-## Types file format
+## Types file naming convention
 There are 4 sets of the CrossDocked2020 data present here: ReDocked2020, CrossDocked2020, CrossDocked2020 It0, and CrossDocked2020 cross-docked only (cdonly) poses. CCV stands for the clustered-cross validation splits. 
 ```
 CCV for ReDocked2020                                     -- types/it2_redocked_tt_*types
@@ -40,3 +40,12 @@ Train: all CrossDocked2020, Test: all CrossDocked2020    -- types/it2_tt_complet
 CCV for CrossDocked2020 (compatible with DenseNet)       -- types/mod_it2_tt_*types
 ```
 See https://github.com/gnina/scripts for how to train a model using a given types file. It is highly recommended that you utilize the provided molcache2 files when training. This will help both in speed of loading the dataset and in efficient memory usage if training multiple models with the same machine.
+
+## Types file format
+Each of the types files utilized here have the following structure:
+```
+<label> <pK> <RMSD to crystal> <Receptor> <Ligand> # <Autodock Vina score>
+```
+Where the label is 1 if the RMSD to the crystal pose is <=2, and the pK is negative if the pose is >2. The receptor and ligand columns correspond to the filenames of the raw data file (and are utilized with our molcahce files). 
+
+NOTE: the exception to this is the types files for the DenseNet, which has the RMSD column removed.

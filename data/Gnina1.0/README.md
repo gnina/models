@@ -37,16 +37,14 @@ If you would like all of the docked structures used in the evaluations in the Gn
 ### Redocking
 The files are organized by the PDB ID of the protein-ligand complex. Each PDB ID is a directory which contains the following files:
 ```bash
-<PDB_ID>_PROT.pdb       -- Receptor file downloaded from the PDB with all other atoms removed
-<PDB_ID>_WAT.pdb        -- Water molecules extracted from complex downloaded from the PDB
-<PDB_ID>_LIG.sdf        -- Ligand file downloaded from the PDB
-<PDB_ID>_OTH.pdb        -- Any other atoms (not water or ligand) extracted from the complex downloaded from the PDB
+<PDB_ID>_PRO.pdb.gz       -- Receptor file downloaded from the PDB with all other atoms removed
+<PDB_ID>_LIG.sdf.gz        -- Ligand file downloaded from the PDB
 ```
 
 ### Cross-docking
 The files are organized by pockets. Each pocket a directory which contains the following files:
 ```bash
-<PDB_ID>_PROT.pdb               -- Receptor file downloaded from the PDB
+<PDB_ID>_PRO.pdb               -- Receptor file downloaded from the PDB
 <PDB_ID>_LIG_aligned.sdf        -- Ligand file downloaded from the PDB
 ```
 ## Data Structure of *_docked_structures.tar.gz
@@ -94,3 +92,6 @@ Each of the txt files provided have the following structure:
 ```
 
 These txt files are designed to be utilized with [make_gnina_cmds.py](https://github.com/dkoes/GNINA-1.0/blob/main/analysis_scripts/make_gnina_cmds.py) to make a file with GNINA commands for running all of the experiments in the paper.
+
+## Analysis
+Information about the analysis pipeline as well as the figure generation can be found in the [GNINA1.0 Repo](https://github.com/dkoes/GNINA-1.0/). All of the python scripts used for the analysis in our paper can be found in [analysis_scripts](https://github.com/dkoes/GNINA-1.0/blob/main/analysis_scripts/) in that repo as well as comprehensive instructions about how to run the analysis.

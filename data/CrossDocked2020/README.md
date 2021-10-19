@@ -46,6 +46,6 @@ Each of the types files utilized here have the following structure:
 ```
 <label> <pK> <RMSD to crystal> <Receptor> <Ligand> # <Autodock Vina score>
 ```
-Where the label is 1 if the RMSD to the crystal pose is <=2, and the pK is negative if the pose is >2. The receptor and ligand columns correspond to the filenames of the raw data file (and are utilized with our molcahce files). 
+Where the label is 1 if the RMSD to the crystal pose is <=2, and 0 otherwise. The pK is calculated by taking the negative log (base 10) of the given number in the PDBbind. We made no distinction between Kd/Ki/IC50. IF the ligand has an unknown affinity, then it is recorded as 0. We additionally labeled the binding affinities as negative if the pose is >2 (this makes it easier to identify the poor pose for our network's hinge loss). The receptor and ligand columns correspond to the filenames of the raw data file (and are utilized with our molcahce files). 
 
 NOTE: the exception to this is the types files for the DenseNet, which has the RMSD column removed.

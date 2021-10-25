@@ -2,8 +2,11 @@
 
  * CrossDocked2020_v1.1_types.tar.gz - Compressed directory containing all of the types files used to train models
  * CrossDocked2020_v1.1.tgz          - Compressed directory containing all of the raw data.
- * crossdock2020_1.1_lig.molcache2  - molcache formatted version of the Ligand training data. Compatible with https://github.com/gnina/libmolgrid
- * crossdock2020_1.1_rec.molcache2  - molcache formatted version of the Receptor training data. Compatible with https://github.com/gnina/libmolgrid
+ * crossdock2020_1.1_lig.molcache2   - molcache formatted version of the Ligand training data. Compatible with https://github.com/gnina/libmolgrid
+ * crossdock2020_1.1_rec.molcache2   - molcache formatted version of the Receptor training data. Compatible with https://github.com/gnina/libmolgrid
+
+## Changelog
+Version 1.1 of CrossDocked2020 has been released. It addresses several receptor structures in the original dataset that were mistakenly flattened and used for training. Version 1.1 has addressed these issues, and re-generated 4830 lines for the corresponding typesfiles. The newly generated lines are available in the cd2020_v1.1_changed_typeslines.txt file.
 
 ## Downloading the tarballs
 http://bits.csb.pitt.edu/files/crossdock2020/

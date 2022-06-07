@@ -1,25 +1,25 @@
 # This directory contains instruction to download the raw data for the CrossDocked2020 set
 
- * CrossDocked2020_v1.1_types.tar.gz - Compressed directory containing all of the types files used to train models
- * CrossDocked2020_v1.1.tgz          - Compressed directory containing all of the raw data.
- * crossdock2020_1.1_lig.molcache2   - molcache formatted version of the Ligand training data. Compatible with https://github.com/gnina/libmolgrid
- * crossdock2020_1.1_rec.molcache2   - molcache formatted version of the Receptor training data. Compatible with https://github.com/gnina/libmolgrid
+ * CrossDocked2020_v1.2_types.tar.gz - Compressed directory containing all of the types files used to train models
+ * CrossDocked2020_v1.2.tgz          - Compressed directory containing all of the raw data.
+ * crossdock2020_1.2_lig.molcache2   - molcache formatted version of the Ligand training data. Compatible with https://github.com/gnina/libmolgrid
+ * crossdock2020_1.2_rec.molcache2   - molcache formatted version of the Receptor training data. Compatible with https://github.com/gnina/libmolgrid
 
 ## Changelog
-Version 1.1 of CrossDocked2020 has been released. It addresses several receptor structures in the original dataset that were mistakenly flattened and used for training. Version 1.1 has addressed these issues, and re-generated 4830 lines for the corresponding typesfiles. The newly generated lines are available in the cd2020_v1.1_changed_typeslines.txt file.
+Version 1.2 of CrossDocked2020 has been released. It addresses several receptor and ligand structures in version 1.1 that had their aromatic rings removed. Version 1.2 has addressed these issues. Since this issue was pervasive, we recommend redownloading the types files from the server.
 
 ## Downloading the tarballs
 http://bits.csb.pitt.edu/files/crossdock2020/
 
-You'll need to download CrossDocked2020_v1.1_types.tar.gz and CrossDocked2020_v1.1.tgz
+You'll need to download CrossDocked2020_v1.2_types.tar.gz and CrossDocked2020_v1.2.tgz
 
 ## Extracting the tarballs
 ```
-wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.1.tgz
-wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.1_types.tar.gz
+wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.2.tgz
+wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.2_types.tar.gz
 mkdir CrossDocked2020
-tar -xzvf CrossDocked2020_v1.1_types.tar.gz
-tar -C CrossDocked2020 -xzf CrossDocked2020_v1.1.tgz
+tar -xzvf CrossDocked2020_v1.2_types.tar.gz
+tar -C CrossDocked2020 -xzf CrossDocked2020_v1.2.tgz
 ```
 
 ## Data structre
@@ -64,8 +64,8 @@ If you are utilizing [libmolgrid](https://github.com/gnina/libmolgrid) to train 
 This is especially handy, as the data can be used as is, without the need to download the entire CrossDocked2020 raw datafiles
 
 ```
-wget http://bits.csb.pitt.edu/files/crossdock2020/crossdock2020_1.1_rec.molcache2
-wget http://bits.csb.pitt.edu/files/crossdock2020/crossdock2020_1.1_lig.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/crossdock2020_1.2_rec.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/crossdock2020_1.2_lig.molcache2
 ```
 
 These caches are usable with our types files (input files to Caffe which define the training data).
@@ -74,15 +74,15 @@ These caches are usable with our types files (input files to Caffe which define 
 Even when using just molcaches and types files to train models, there is still about 22Gb of data that needs to be loaded into memory. In order to provide a less intesive version of the dataset, we also provide a downsampled version of CrossDocked2020.
 
 ```
-wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.1_rec.molcache2
-wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.1_lig.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.2_rec.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.2_lig.molcache2
 ```
 
 These caches are utilized by a different set of types files:
 
 ```
-wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_CrossDocked2020_v1.1_types.tar.gz
-tar -xzf downsampled_CrossDocked2020_v1.1_types.tar.gz
+wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_CrossDocked2020_v1.2_types.tar.gz
+tar -xzf downsampled_CrossDocked2020_v1.2_types.tar.gz
 ```
 
 We have provided a downsampled version of the it2 clustered cross-validated sets mentioned above. This version only requres about 5Gb of data to be loaded into memory.

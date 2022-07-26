@@ -74,8 +74,8 @@ These caches are usable with our types files (input files to Caffe which define 
 Even when using just molcaches and types files to train models, there is still about 22Gb of data that needs to be loaded into memory. In order to provide a less intesive version of the dataset, we also provide a downsampled version of CrossDocked2020.
 
 ```
-wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.2_rec.molcache2
-wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_v1.2_lig.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_1.2_rec.molcache2
+wget http://bits.csb.pitt.edu/files/crossdock2020/downsampled_crossdock2020_1.2_lig.molcache2
 ```
 
 These caches are utilized by a different set of types files:

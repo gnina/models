@@ -1,7 +1,7 @@
 # This directory contains instruction to download the raw data for the CrossDocked2020 set
 
  * CrossDocked2020_v1.2_types.tar.gz - Compressed directory containing all of the types files used to train models
- * CrossDocked2020_v1.2.tgz          - Compressed directory containing all of the raw data.
+ * CrossDocked2020_v1.2.tgz          - Compressed directory containing all of the raw data. It is 756GB when uncompressed.
  * crossdock2020_1.2_lig.molcache2   - molcache formatted version of the Ligand training data. Compatible with https://github.com/gnina/libmolgrid
  * crossdock2020_1.2_rec.molcache2   - molcache formatted version of the Receptor training data. Compatible with https://github.com/gnina/libmolgrid
 
@@ -14,6 +14,7 @@ http://bits.csb.pitt.edu/files/crossdock2020/
 You'll need to download CrossDocked2020_v1.2_types.tar.gz and CrossDocked2020_v1.2.tgz
 
 ## Extracting the tarballs
+WARNING -- CrossDocked2020_v1.2.tgz is 756GB when uncompressed!!
 ```
 wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.2.tgz
 wget http://bits.csb.pitt.edu/files/crossdock2020/CrossDocked2020_v1.2_types.tar.gz

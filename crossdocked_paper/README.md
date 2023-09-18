@@ -9,6 +9,7 @@ This directory includes the models and atom maps used in our paper [Three-Dimens
 * hires_affinity.model - a higher resolution (slower) model taht performs particularly well at affinity prediction
 * hires_affinity_norec.model - a higher resolution (slower) model taht performs particularly well at affinity prediction, for ligand-only models
 * dense.model - a densely connected CNN architecture from [Gao Huang et al](https://arxiv.org/abs/1608.06993)
+* *.caffemodel - weights for all of the GNINA built-in models. Suffix provides the model seed, not present when seed is 0.
 
 ## Usage
 These model files are blank slates for training your own models.

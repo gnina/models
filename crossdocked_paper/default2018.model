@@ -21,8 +21,8 @@ layer {
         has_affinity: true
         has_rmsd: true
         root_folder: "DATA_ROOT"
-        ligmolcache: "GENCACHE_FILE"
-        recmolcache: "LIGCACHE_FILE"
+        ligmolcache: "LIGCACHE_FILE"
+        recmolcache: "RECCACHE_FILE"
     }
   }
   
@@ -55,8 +55,8 @@ layer {
         random_rotation: true
         random_translate: 6
         root_folder: "DATA_ROOT"
-        ligmolcache: "GENCACHE_FILE"
-        recmolcache: "LIGCACHE_FILE"        
+        ligmolcache: "LIGCACHE_FILE"
+        recmolcache: "RECCACHE_FILE"        
     }
 }
 layer {

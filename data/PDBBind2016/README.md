@@ -61,7 +61,7 @@ Train: Refined+Core Test:Refined+Core with Docked poses -- fixed_ref_uff_complet
 Clustered Cross Validated Splits                        -- ccv_gen_uff*
 Clustered Cross Validated Splits    Ligand Only         -- ccv_gen_norec_uff*
 Train: Refined-Core Test:Core  with Docked poses        -- gen_uff_*
-Train: Refined+Core Test:Refined+Core with Docked poses -- fixed_ref_uff_completeset_*
+Train: Refined+Core Test:Refined+Core with Docked poses -- fixed_gen_uff_completeset_*
 ```
 ## Caches
 ```
